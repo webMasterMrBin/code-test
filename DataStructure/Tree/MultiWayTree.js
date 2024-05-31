@@ -34,6 +34,19 @@ const traverseTree = (tree) => {
   })
 }
 
+// 找到所有分支的树的集合
+function findAllPaths(node, path) {
+  const newPath = [...path, node.value];
+
+  if (node.children.length === 0) {
+    return [newPath];
+  }
+
+  return node.children.reduce((acc, cur) => {
+    return [...acc, ...findAllPaths(cur, newPath)]
+  }, [])
+}
+
 // 队列广度优先遍历
 const BreadthFirstTraverseTree = tree => {
   const queue = [tree]; // 初始化队列，起始为树的根节点
@@ -51,6 +64,20 @@ const BreadthFirstTraverseTree = tree => {
       });
     }
   }
+}
+
+let max = -Infinity
+// n叉树所有路径值的和的最大值
+function findMax(node, currentSum) {
+  currentSum += node.value;
+  if (node.children.length === 0) {
+    max = Math.max(max, currentSum);
+    return;
+  }
+  node.children.forEach(v => {
+    findMax(v, currentSum);
+  })
+  return max;
 }
 
 traverseTree(tree);
