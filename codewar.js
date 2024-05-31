@@ -94,7 +94,7 @@ function recordDepth(tree, num = 0) {
   for (const key in tree) {
     newTree[key] = recordDepth(tree[key], num + 1) || tree[key];
   }
-  console.log(' newTree ', newTree)
+  // console.log(' newTree ', newTree)
   // return newTree;
 }
 const a = { a: 1, b: 2, c: { d: { e: 3 } } }
