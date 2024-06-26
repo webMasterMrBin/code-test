@@ -34,14 +34,6 @@ function findMaxPathSum(root) {
   }
   const { value, left, right } = root;
 
-  if (!right) {
-    return value + findMaxPathSum(left)
-  }
-  
-  if (!left) {
-    return value + findMaxPathSum(right)
-  }
-
   return value + Math.max(findMaxPathSum(left), findMaxPathSum(right))
 }
 

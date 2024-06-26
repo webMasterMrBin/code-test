@@ -34,6 +34,41 @@ const traverseTree = (tree) => {
   })
 }
 
+function findNode(root, value) {
+  if (root.value === value) {
+    return root;
+  }
+
+  for (const v of root.children) {
+    const result = findNode(v, value);
+    if (result) {
+      return result;
+    }
+  }
+
+}
+
+function findMaxValue(root) {
+  if (root.children.length === 0) {
+    return root.value;
+  }
+  // let max = 0;
+  // root.children.forEach(v => {
+  //   max = Math.max(v.value, findMax(v));
+  // })
+  // return max;
+
+  return Math.max(...root.children.map(v => Math.max(v.value, findMax(v))))
+}
+
+/* const findMaxValue = (root) => {
+  // 递归获取包含最大值
+  return root.children.reduce((maxNode, child) => {
+    const maxChild = findMaxNode(child); // 递归寻找子树中的最大节点
+    return maxChild > maxNode ? maxChild : maxNode;
+  }, root.value); // 初始值设置为当前根节点
+} */
+
 // 找到所有分支的树的集合
 function findAllPaths(node, path) {
   const newPath = [...path, node.value];
@@ -80,4 +115,57 @@ function findMax(node, currentSum) {
   return max;
 }
 
-traverseTree(tree);
+function findLCA(root, node1, node2) {
+  if (!root) return null; // Base case: 空节点直接返回null
+
+  // 如果当前节点匹配node1或node2，则返回当前节点
+  if (root.id === node1 || root.id === node2) return root;
+
+  // 递归在所有子树中查找node1和node2
+  let foundNodes = root.children.map(child => findLCA(child, node1, node2)).filter(result => result !== null);
+
+  // 如果在两个子树里分别找到了node1和node2，则当前节点为LCA
+  if (foundNodes.length === 2) return root;
+
+  // 如果只在一个子树中找到了node1或node2，则返回那个节点
+  return foundNodes.length === 1 ? foundNodes[0] : null;
+}
+
+// 测试用例
+const tree = {
+  id: 1,
+  children: [
+    {
+      id: 2,
+      children: [
+        {
+          id: 4,
+          children: []
+        }
+      ]
+    },
+    {
+      id: 3,
+      children: []
+    }
+  ]
+};
+
+const lca = findLCA(tree, 2, 4);
+
+// 查找多叉树最大深度
+function findTreeMaxDepth(root){
+  let maxDepth = 0;
+
+  if (root.children.length === 0) {
+    return 0;
+  }
+
+  root.children.forEach(v => {
+    maxDepth = Math.max(maxDepth, createTreeDirectory(v));
+  });
+
+  return maxDepth + 1;
+}
+
+console.log(lca ? `LCA ID: ${lca.id}` : 'No common ancestor found');
