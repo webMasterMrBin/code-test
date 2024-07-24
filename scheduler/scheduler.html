@@ -1,0 +1,35 @@
+<html>
+  <head>
+    <style>
+      .header {
+        margin: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- <script src="./scheduler.js"></script> -->
+    <div id="target">target</div>
+    <button id="get">get offsetheight</button>
+    <button id="change">change class</button>
+
+    <script>
+      const delay = (wait = 1000) => {
+        const startTime = performance.now();
+        let endTime = startTime;
+
+        while (endTime - startTime < wait) {
+          endTime = performance.now();
+        }
+      }
+
+      const target = document.getElementById('target');
+      document.getElementById('get').addEventListener('click', (e) => {
+        delay(10);
+      
+        
+        target.classList.add('header');
+        console.log('offsetheight', target.offsetHeight);
+      })
+    </script>
+  </body>
+</html>

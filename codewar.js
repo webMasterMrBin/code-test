@@ -245,4 +245,11 @@ const findMaxNode = (root) => {
 }
 
 
-console.log(findMaxNode(tree))
+// console.log(findMaxNode(tree))
+
+
+// interleave([1, 2, 3], [4, 5, 6], [7, 8, 9]) === [1, 4, 7, 2, 5, 8, 3, 6, 9]
+
+function interleave(...args) {
+  return Array(Math.max(...args.map(v => v.length))).fill(1).flatMap((v, i) => args.map(o => o[i] || null))
+}

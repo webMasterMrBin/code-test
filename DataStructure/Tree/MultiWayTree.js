@@ -70,7 +70,7 @@ function findMaxValue(root) {
 } */
 
 // 找到所有分支的树的集合
-function findAllPaths(node, path) {
+function findAllPaths(node, path = []) {
   const newPath = [...path, node.value];
 
   if (node.children.length === 0) {
