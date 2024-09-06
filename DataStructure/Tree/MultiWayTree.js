@@ -101,6 +101,24 @@ const BreadthFirstTraverseTree = tree => {
   }
 }
 
+// 深度遍历函数（迭代）
+function depthFirstTraversal(tree) {
+  const stack = [tree]; // 初始化栈，存入根节点
+  const result = []; // 存储遍历结果
+
+  while (stack.length > 0) {
+      const node = stack.pop(); // 弹出栈顶节点
+      result.push(node.value); // 处理节点（这里做的是记录值）
+
+      // 倒序添加子节点到栈，这样弹出的顺序是从左到右
+      for (let i = node.children.length - 1; i >= 0; i--) {
+          stack.push(node.children[i]);
+      }
+  }
+
+  return result;
+}
+
 let max = -Infinity
 // n叉树所有路径值的和的最大值
 function findMax(node, currentSum) {
