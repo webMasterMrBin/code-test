@@ -22,4 +22,33 @@
   2. 通过一个js变量判断是展开还是收起
   3. 收起后需要监听 transitionend事件 在事件结束后 还原元素高度
   */
+
+  // 收起 ref为react dom ref
+  const collapseContainer = () => {
+    // 双RAF确保动画效果
+    requestAnimationFrame(() => {
+      // 第一个raf设置初始高度
+      ref.current!.style.height = `${ref.current!.scrollHeight}px`;
+      ref.current!.style.opacity = '1';
+      requestAnimationFrame(() => {
+        ref.current!.style.height = '0px';
+        ref.current!.style.opacity = '0';
+      });
+    });
+  };
+
+  // 展开ref为react dom ref
+  const expandContainer = () => {
+    ref.current!.style.height = `${ref.current!.scrollHeight}px`;
+    ref.current!.style.opacity = '1';
+
+    const handleTransitionend = () => {
+      // 展开后移除transitionend事件, 确保不会重复注册
+      ref.current!.removeEventListener('transitionend', handleTransitionend);
+
+      ref.current!.style.height = 'auto';
+    };
+
+    ref.current!.addEventListener('transitionend', handleTransitionend);
+  };
 ```
