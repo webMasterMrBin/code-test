@@ -186,4 +186,85 @@ function findTreeMaxDepth(root){
   return maxDepth + 1;
 }
 
-console.log(lca ? `LCA ID: ${lca.id}` : 'No common ancestor found');
+// 从一个多叉树中筛选出所有叶子节点满足 搜索title的值组成一个新的过滤的tree
+/**
+ * {
+      title: '0-0',
+      key: '0-0',
+      children: [
+        {
+          title: '0-0-0',
+          key: '0-0-0',
+          children: [
+            {
+              title: '0-0-0-1',
+              key: '0-0-0-1',
+              children: [],
+            },
+          ],
+        },
+        {
+          title: '0-0-1',
+          key: '0-0-1',
+          children: [
+            {
+              title: '0-0-1-2',
+              key: '0-0-1-2',
+              children: [],
+            },
+            {
+              title: '0-0-1-22',
+              key: '0-0-1-22',
+              children: [],
+            },
+          ],
+        },
+        {
+          title: '0-0-2',
+          key: '0-0-2',
+          children: [],
+        },
+      ],
+    },
+    若keyword为2 则搜索后预期变为
+    {
+      title: '0-0',
+      key: '0-0',
+      children: [
+        {
+          title: '0-0-1',
+          key: '0-0-1',
+          children: [
+            {
+              title: '0-0-1-2',
+              key: '0-0-1-2',
+              children: [],
+            },
+            {
+              title: '0-0-1-22',
+              key: '0-0-1-22',
+              children: [],
+            },
+          ],
+        },
+        {
+          title: '0-0-2',
+          key: '0-0-2',
+          children: [],
+        },
+      ],
+    },
+ */
+function filterTree(node, keyword) {
+  // 如果是叶子节点，并且title包含'2'，保留这个节点
+  if (node.children.length === 0) {
+    return node.title.includes(keyword) ? node : null;
+  }
+  // 当前node 的所有子节点集合
+  const filterChildren = node.children.map(child => filterTree(child, keyword)).filter(Boolean);
+
+  return filterChildren.length > 0 ? {
+    ...node,
+    children: filterChildren,
+  } : null;
+}
