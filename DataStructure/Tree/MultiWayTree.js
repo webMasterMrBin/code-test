@@ -82,6 +82,15 @@ function findAllPaths(node, path = []) {
   }, [])
 }
 
+// 找所有叶子节点 结果是一个数组
+function filterLeafNodes(node, allLeafNodes = []) {
+  if (node.children.length === 0) {
+    return [...allLeafNodes, node];
+  }
+
+  return node.children.reduce((acc, cur) => [...acc, ...filterLeafNodes(cur, allLeafNodes)], []);
+}
+
 // 队列广度优先遍历
 const BreadthFirstTraverseTree = tree => {
   const queue = [tree]; // 初始化队列，起始为树的根节点
