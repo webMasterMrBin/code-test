@@ -277,3 +277,30 @@ function filterTree(node, keyword) {
     children: filterChildren,
   } : null;
 }
+
+function findSubNodes(node, key) {
+  const result = [];
+
+  function collectNodes(node) {
+    result.push(node.key);
+    if (node.children.length === 0) {
+     return;
+    }
+
+    node.children.forEach(v => {
+      collectNodes(v);
+    });
+  }
+
+  function traverseTree(node) {
+    if (node.key === key) {
+      collectNodes(node)
+    } else {
+      node.children.forEach(v => traverseTree(v));
+    }
+  }
+
+  traverseTree(node);
+
+  return result;
+}
