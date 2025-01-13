@@ -253,3 +253,12 @@ const findMaxNode = (root) => {
 function interleave(...args) {
   return Array(Math.max(...args.map(v => v.length))).fill(1).flatMap((v, i) => args.map(o => o[i] || null))
 }
+
+// 给定一个值total, 和一个数组(数组数量表示共n个值平均分该total, 除不尽平均分)
+// precision 小数点精度 默认1表示 整数, 10 表示1位小数 
+function average(total, array, precision = 1) {
+  const baseValue = Math.floor(total * precision / array.length);
+  const remander =  total * precision % array.length;
+
+  return array.map((v, i) => remander > 0 && i < remander ? (baseValue + 1) / precision : baseValue / precision);
+}
