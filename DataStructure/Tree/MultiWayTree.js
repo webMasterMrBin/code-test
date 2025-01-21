@@ -70,6 +70,7 @@ function findMaxValue(root) {
 } */
 
 // 找到所有分支的树的集合
+// 场景2  所用分支树集合深度判断 可计算是否是完美二叉树
 function findAllPaths(node, path = []) {
   const newPath = [...path, node.value];
 
@@ -142,21 +143,8 @@ function findMax(node, currentSum) {
   return max;
 }
 
-function findLCA(root, node1, node2) {
-  if (!root) return null; // Base case: 空节点直接返回null
 
-  // 如果当前节点匹配node1或node2，则返回当前节点
-  if (root.id === node1 || root.id === node2) return root;
 
-  // 递归在所有子树中查找node1和node2
-  let foundNodes = root.children.map(child => findLCA(child, node1, node2)).filter(result => result !== null);
-
-  // 如果在两个子树里分别找到了node1和node2，则当前节点为LCA
-  if (foundNodes.length === 2) return root;
-
-  // 如果只在一个子树中找到了node1或node2，则返回那个节点
-  return foundNodes.length === 1 ? foundNodes[0] : null;
-}
 
 // 测试用例
 const tree = {
