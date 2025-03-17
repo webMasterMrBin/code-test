@@ -70,6 +70,44 @@ function BFS(node) {
 }
 
 
+// 二叉树深度优先遍历(stack)
+function DFSbyStack(tree) {
+  const stacks = [tree];
+  const result = [];
+  while (stacks.length) {
+    const node = stacks.pop();
+    if (!node) {
+      continue;
+    }
+    result.push(node.data);
+    stacks.push(node.right);
+    stacks.push(node.left);
+   
+  }
+
+  return result;
+}
+
+// 二叉树广度优先遍历(queue)
+function BFSByQueue(tree) {
+  const queue = [tree];
+  const result = [];
+
+  while (queue.length) {
+    const node = queue.shift();
+
+    if (!node) {
+      continue;
+    }
+
+    result.push(node.data);
+    queue.push(node.left);
+    queue.push(node.right);
+    
+  }
+  return result;
+}
+
 // 数组转二叉树 [17, 0, -4, 3, 15] =>
 /* 
     17
